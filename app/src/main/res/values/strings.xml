@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">夏目大輝の…</string>
+    <string name="defaut_UserA">UserA</string>
+    <string name="defaut_UserB">UserB</string>
+    <string name="defaut_UserC">UserC</string>
+    <string name="defaut_UserU">UserU</string>
+    <string name="NEXT_ButtonName">NEXT</string>
+    <string name="first_bet">10</string>
+</resources>
