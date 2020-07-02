@@ -1,35 +1,27 @@
-package com.example.kunfun
+package com.example.kunchin
 
 // 四人のプレーヤを生む
 // クリックされたら１回ゲームする
 // ゲームのジャッジ（誰がどんな手で何点買ったか／負けたかの判定）ができる
 
-class ChinEnvironment {
+import android.util.Log
+
+class ChinEnvironment() {
 
     // インスタンス変数
+    var playDices: ChinDices = ChinDices()
     val players: MutableList<ChinPlayer> = mutableListOf<ChinPlayer>()
 
     // 初期化メソット（必ず呼ばれる）
     init {
-        players.add(ChinPlayer("PlayerU"))
-        players.add(ChinPlayer("PlayerA"))
-        players.add(ChinPlayer("PlayerB"))
-        players.add(ChinPlayer("PlayerC"))
-    }
-
-    // 1回分（「NEXT」ボタンのクリックのたびに呼ばれる)
-    fun onePlay(aBet: Int) {
-
-        for (eachPlayer in players) {
-            eachPlayer.setThrowing()
-        }
-        judging(aBet)
-        return
-
+        players.add(ChinPlayer("Player1", playDices))
+        players.add(ChinPlayer("Player2", playDices))
+        players.add(ChinPlayer("Player3", playDices))
+        players.add(ChinPlayer("Me     ", playDices))
     }
 
     // 地方によってルールが少し違うかもしれない
-    private fun judging(aBet: Int) {
+    fun judging(aBet: Int) {
 
         val sortedPlayers: List<ChinPlayer> = players.sortedWith(compareBy({ it.myHand.power }, { it.power }))
 
@@ -44,6 +36,10 @@ class ChinEnvironment {
         // 普通の順位づけ（得点移動あり）
         val winnerPlayer: ChinPlayer = sortedPlayers.last()
         val winnerPower: Int = winnerPlayer.power
+
+        Log.d("myTAG", "winnerPlayer:$winnerPlayer")     // debug-write
+        Log.d("myTAG", "winnerPower:$winnerPower")     // debug-write
+
 
         // 勝者が１２３か判定
         winnerPlayer.howWon = if (winnerPower >= 0) Judges.Win else Judges.Fall

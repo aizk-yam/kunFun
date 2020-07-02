@@ -1,23 +1,27 @@
-package com.example.kunfun
+package com.example.kunchin
 
 // プレーヤ ☓一人
-// ダイスセット（３個）を持っている
+// ダイスセット（３個）をEnvironmentから渡される
 // １ゲーム分のダイスを振る
-// インスタンス同士を比較できる（どちらが強いか）
+// インスタンス同士を比較できる（強さが同じか）
 
-import android.util.Log
-
-class ChinPlayer(aName: String) {
+class ChinPlayer(aName: String, dices: ChinDices) {
 
     // インスタンス変数
     var myName: String = aName
-    var myDices: ChinDices = ChinDices()
+    val myDices: ChinDices = dices
     var myHand: Hand = Hand.Butame
     var power: Int = 0
     var myPoints: Int = 1000
     var howWon: Judges = Judges.na
 
-    // accessing
+    var myHandName: String = "buta"
+    var myHandMe: String = "[0][0][0]"
+    var myHandKachime: Int = 0
+
+    init {
+        setThrowing()
+    }
 
     // 三回スローイング（ブタでなければそこで終わり）
     fun setThrowing() {
@@ -26,6 +30,10 @@ class ChinPlayer(aName: String) {
         if (myDices.isButame()) myDices.throwing()
         power = myDices.power
         myHand = myDices.myHand
+
+        myHandName = myDices.myHandName()
+        myHandMe = myDices.myHandMe()
+        myHandKachime = myDices.kachime
         howWon = Judges.na
     }
 
@@ -34,11 +42,7 @@ class ChinPlayer(aName: String) {
     // このオブジェクトを”＝＝”で比較する
     override fun equals(other: Any?): Boolean {
         val aPlayer: ChinPlayer? = other as? ChinPlayer
-        return (myDices == aPlayer?.myDices)
-    }
-
-    override fun hashCode(): Int {
-        return (this.hashCode())
+        return ((myHand == aPlayer?.myHand) and (power == aPlayer?.power))
     }
 
 }

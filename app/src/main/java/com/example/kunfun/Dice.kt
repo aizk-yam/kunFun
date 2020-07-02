@@ -1,4 +1,4 @@
-package com.example.kunfun
+package com.example.kunchin
 
 // ダイス１個
 // ダイスを振る（1個）
@@ -6,14 +6,12 @@ package com.example.kunfun
 class Dice() {
 
     // インスタンス変数
-    var points: Int = throwing()
+    var points: Int = 0
 
-    fun throwing(): Int {
+    fun throwing() {
 
-        val randomInteger: Int
-        randomInteger = (1..6).shuffled().first()
-        points = randomInteger
-        return (points)
+        points = (1..6).random()
+
     }
 
 }

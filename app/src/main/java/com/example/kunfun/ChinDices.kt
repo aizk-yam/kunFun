@@ -1,11 +1,9 @@
-package com.example.kunfun
+package com.example.kunchin
 
 // 3個のダイスがある（ダイスセット；一人分）
 // ダイスを振ることができる（3個）
 // インスタンス同士を比較できる（どちらが強いか）
 // 目と役を印刷する
-
-import android.util.Log
 
 class ChinDices() {
 
@@ -16,6 +14,9 @@ class ChinDices() {
     private var diceA: Dice = Dice()
     private var diceB: Dice = Dice()
     private var diceC: Dice = Dice()
+//    var diceA: Dice = Dice()
+//    var diceB: Dice = Dice()
+//    var diceC: Dice = Dice()
 
     fun throwing() {
         diceA.throwing()
@@ -24,6 +25,11 @@ class ChinDices() {
         myHand = handAnalyze()
     }
 
+//    fun throwing() {
+//        throwingOne()
+//        if (this.isButame()) throwingOne()
+//        if (this.isButame()) throwingOne()
+//    }
 
     // printing
 
@@ -36,7 +42,7 @@ class ChinDices() {
     }
 
     // Enumだけで実装できる；enum>Hand参照（これはmap型を使用した例）
-    fun myHandName(): String? {
+    fun myHandName(): String {
         val yakumeiDictionary: Map<Hand, String> =
             mapOf(
                 Hand.Butame to "ぶた",
@@ -45,26 +51,15 @@ class ChinDices() {
                 Hand.Zorome to "ぞろ目",
                 Hand.Hifumi to "一二三"
             )
+        val yakumei: String? = yakumeiDictionary[myHand]
 
-        return (yakumeiDictionary[myHand])
+        return (if (yakumei != null) yakumei else "---" )
     }
 
     // accessing
 
     fun isButame(): Boolean {
         return (myHand == Hand.Butame)
-    }
-
-    // comparing
-
-    // このオブジェクトを”＝＝”で比較する
-    override fun equals(other: Any?): Boolean {
-        val aDices: ChinDices? = other as? ChinDices
-        return ((myHand == aDices?.myHand) and (power == aDices?.power))
-    }
-
-    override fun hashCode(): Int {
-        return ( this.hashCode() )
     }
 
     // private
